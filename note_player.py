@@ -3,7 +3,7 @@ from threading import Timer
 from notes_conversion import note_name_to_number, note_number_to_name
 
 def play_note_groups(outport_gb, note_groups, timings):
-    # print("Note groups received:", note_groups)  # Debug: Print to see the actual structure
+    # print("Note groups received:", note_groups)
     if len(timings) < len(note_groups):
         last_timing = timings[-1] if timings else 0.5
         timings.extend([last_timing] * (len(note_groups) - len(timings)))
@@ -15,7 +15,7 @@ def play_note_groups(outport_gb, note_groups, timings):
         Timer(delay, lambda note_names=note_names, delay=delay: print(f"{note_names}")).start()
         
         for note_tuple in group:  
-            if len(note_tuple) == 2:  # Check if each tuple has exactly two elements
+            if len(note_tuple) == 2:
                 note, velocity = note_tuple
                 note_number = note_name_to_number(note)
                 if note_number is None:
@@ -25,7 +25,7 @@ def play_note_groups(outport_gb, note_groups, timings):
                     # print(f"{note_name}(velocity {velocity})")
                     Timer(delay, lambda nn=note_number, v=velocity: play_single_note(outport_gb, nn, v)).start()
             else:
-                print("Unexpected note format:", note_tuple)  # Debug: Identify non-conforming tuples)
+                print("Unexpected note format:", note_tuple))
 
 def play_single_note(outport_gb, note_number, velocity):
     # print(f"Playing {note_number} with velocity {velocity}")
