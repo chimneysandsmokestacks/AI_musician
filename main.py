@@ -6,7 +6,7 @@ from midi_input_handler import handle_midi_input, simulate_midi_input
 from note_processor import process_note_queue
 
 SIMULATE_NOTES = True
-use_default_port = False  # or some condition that determines this
+use_default_port = False 
 
 if use_default_port:
     keyboard_to_script_port = 'MPK249 Port A'
@@ -19,7 +19,7 @@ mode = "sequence"
 midi_port = keyboard_to_script_port 
 
 ### opens port to listen to incoming notes. Sends notes to midi_input_handler. Also creates thread to send notes 
-### in note_quee to note_processor.py/process_note_queue
+### in note_queue to note_processor.py/process_note_queue
 def monitor_note_queue(note_queue):
     while True:
         note_data = note_queue.get()
@@ -30,11 +30,10 @@ def monitor_note_queue(note_queue):
 
 def main(note_queue, mode, midi_port):
     with mido.open_output(script_to_garageband_port) as outport_gb:
-        # Starting processing thread
+    
         player_thread = Thread(target=process_note_queue, args=(note_queue, outport_gb))
         player_thread.start()
-
-        # Starting monitoring thread
+        
         monitor_thread = Thread(target=monitor_note_queue, args=(note_queue,))
         monitor_thread.start()
 
@@ -52,7 +51,7 @@ if __name__ == '__main__':
                 handle_midi_input(inport, note_queue, mode)
 
         # print("Preparing to send termination signal...")
-        # note_queue.put(None)  # Signal to stop the player thread
+        # note_queue.put(None)
         player_thread.join()
 
 main(note_queue, mode, midi_port)
