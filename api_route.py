@@ -65,14 +65,11 @@ def parse_response(response_data, mode):
     # print(f"API response: {content}")
 
     try:
-        # Separate the chord progression from the notes
-        note_parts, chord_progression = content.split(" END.")
-        
-        # Extract the key from the beginning of the note parts
-        key, note_parts = note_parts.split(", ", 1)  # First split after key
-        key = key.split("Key: ")[1].strip()
 
-        # Regex to parse note-velocity pairs within groups
+        note_parts, chord_progression = content.split(" END.")
+    
+        key, note_parts = note_parts.split(", ", 1)  # First split after key
+        key = key.split("Key: ")[1].strip() 
         note_groups = []
         raw_note_groups = re.findall(r"\(([^)]+)\)", note_parts)
         for group in raw_note_groups:
