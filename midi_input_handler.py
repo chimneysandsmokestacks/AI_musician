@@ -57,9 +57,8 @@ def simulate_midi_input(outport, note_queue, mode):
         notes_buffer.append(note)
         timings_buffer.append(timing)
 
-    # Queue the note data for processing after a delay
     Timer(api_delay, lambda: enqueue_notes(note_queue, notes_buffer, timings_buffer, mode)).start()
-    # print("Notes queued for processing after delay.")
+    # print("Notes queued for processing.")
 
 def enqueue_notes(note_queue, notes, timings, mode):
     # print(f"Enqueuing {notes} with timings {timings} for mode: {mode}")
