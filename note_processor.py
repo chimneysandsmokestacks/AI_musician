@@ -7,8 +7,8 @@ def process_note_queue(note_queue, outport_gb):
         note_data = note_queue.get()
         
         if note_data is None:
-            print("Received termination signal, stopping processing.")
-            break  # Exit if "None" is received, indicating no more data will be sent
+            print("Terminating")
+            break 
 
         notes, timings, mode = note_data['notes'], note_data['timings'], note_data['mode']
         print(f"Sending to API Route: {notes}")
@@ -20,4 +20,4 @@ def process_note_queue(note_queue, outport_gb):
             # print(f"API response: {note_groups}")
             play_note_groups(outport_gb, note_groups, timings)
         else:
-            print("Received invalid or empty response from OpenAI.")
+            print("Invalid response from OpenAI.")
